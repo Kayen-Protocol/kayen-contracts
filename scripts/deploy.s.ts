@@ -7,18 +7,25 @@ async function main() {
 
   // Set deployment parameters
   const maxSupply = ethers.utils.parseEther("88000000"); // 88 million KAYEN
-  const initialSupply = ethers.utils.parseEther("5000000"); // 10 million KAYEN
-  const initialEmissionRate = ethers.utils.parseEther("0.01"); // 0.01 KAYEN per second
-  const treasuryAddress = "0x86d36bd2EEfB7974B9D0720Af3418FC7Ca5C8897"; // Replace with actual treasury address
+  const initialSupply = ethers.utils.parseEther("70400000"); // 70.4 million KAYEN (80% of maxSupply)
+  const initialEmissionRate = ethers.utils.parseEther("0"); // 0 KAYEN per second
+  const treasuryAddress = "0x80B714e2dd42611e4DeA6BFe2633210bD9191bEd"; // Replace with actual treasury address
+  console.log("maxSupply", maxSupply);
+  console.log("initialSupply", initialSupply);
+  console.log("initialEmissionRate", initialEmissionRate);
+  console.log("treasuryAddress", treasuryAddress);
 
   // Deploy KayenToken
   const KayenToken = await ethers.getContractFactory("KayenToken");
   const kayenToken = await KayenToken.deploy(maxSupply, initialSupply, initialEmissionRate, treasuryAddress);
-
   await kayenToken.deployed();
 
   console.log("KayenToken deployed to:", kayenToken.address);
 
+  const tx = await kayenToken.transferOwnership(treasuryAddress);
+  await tx.wait();
+  console.log("Ownership transferred to:", treasuryAddress);
+  
   // Optional: Set up initial configurations
   // const tx1 = await kayenToken.initializeMasterAddress("0x0987654321098765432109876543210987654321"); // Replace with actual master address
   // await tx1.wait();
@@ -39,3 +46,5 @@ main()
     console.error(error);
     process.exit(1);
   });
+
+// npx hardhat run scripts/deploy.ts --network chiliz

@@ -19,14 +19,13 @@ const config: HardhatUserConfig = {
   networks: {
     chiliz: {
       allowUnlimitedContractSize: true,
-      url: "https://rpc.ankr.com/chiliz",
+      url: "https://rpc.ankr.com/chiliz/5747708213d21767e4c9839a5930bf488b64e93d2311bdc24125a570a2da1479",
       chainId: 88888,
       accounts: [process.env.MAINNET_KEY],
       gas: "auto",
       gasPrice: "auto",
       txFeeCap: "100000000000000000000000000", // 0.1 ether
       // txGasPrice: 50000000000, // Increase this value to allow higher transaction fees
-      runs: 0,
     },
     spicy: {
       allowUnlimitedContractSize: true,
@@ -36,7 +35,6 @@ const config: HardhatUserConfig = {
       gas: "auto",
       gasPrice: "auto",
       txFeeCap: "100000000000000000000000000", // 0.1 ether
-      runs: 0,
     },
   },
   mocha: {
